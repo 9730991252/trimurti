@@ -3,9 +3,9 @@ from office.models import *
 from django.contrib import messages
 # Create your views here.
 def index(request):
-    o = Office_employee.objects.get(name='keshaw talekar')
-    o.name = 'Keshav Talekar'
-    o.save()
+    #o = Office_employee.objects.get(name='keshaw talekar')
+    #o.name = 'Keshav Talekar'
+    #o.save()
     return render(request, 'home/index.html')
 
 
