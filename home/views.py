@@ -3,6 +3,9 @@ from office.models import *
 from django.contrib import messages
 # Create your views here.
 def index(request):
+    o = Office_employee.objects.get(name='keshaw talekar')
+    o.name = 'Keshav Talekar'
+    o.save()
     return render(request, 'home/index.html')
 
 
@@ -32,7 +35,7 @@ def sunil_login(request):
             request.session['sunil_mobile'] = s
             return redirect('sunil_home')
         else:
-            return redirect('login')
+            return redirect('sunil_login')
     return render(request, 'home/sunil_login.html')
 
 
