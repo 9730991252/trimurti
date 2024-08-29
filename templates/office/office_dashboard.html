@@ -1,0 +1,337 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% include 'include/alert.html' %}
+<!-- * style -->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>
+<!-- end * style -->
+
+<!--* media screen style *-->
+<style media="only screen and (max-width: 500px)">
+    .Todays_Production{
+        background-color: rgb(212, 255, 255);
+        border-radius: 10px;
+        width: fit-content;
+        padding: 5px;
+        font-weight: 700;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+    .col-2{
+        display: none;
+    }
+    .col-10{
+        width: 100%;
+    }
+</style>
+<!-- end media screen style -->
+
+<!-- calender style *-->
+<style>
+    .calender{
+        width: 350px;
+
+        background-color: #ffffff;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+    }   
+    .month{
+        width: 100%;
+        background-color: rgb(101, 245, 255);
+        color:#ffffff;
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        padding: 10px 20px;
+        align-items: center;
+        text-shadow: rgb(0, 0, 0) 1px 0 10px;
+
+    }
+    .weekends{
+        background-color: rgb(0, 203, 218);
+        display: flex;
+        padding: 5px 0px ;
+        text-shadow: rgb(0, 0, 0) 1px 0 10px;
+    }
+    .weekends div{
+        width: 14.28%;
+        text-align: center;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    .days{
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        font-weight: 300;
+        padding: 10px 0px;
+
+    }
+    .days div{
+        width: 14.28%;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        transition: all 0.4s;
+    }
+    .days div:hover{
+        background-color: #dfe6e9;
+        cursor: pointer;
+    }
+    .prev_date{
+        color: #a1a1a1;
+    }
+    #month{
+        font-size: 30px;
+        font-weight: 500;
+    }
+    .prev, .next{
+        width: 40px;
+        height: 40px;
+        background-color: rgba(85, 85, 85, 0.2);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+    }
+    .font_style{
+        font-weight: 500;
+        color: black;
+    }
+    .luck{
+        background-color: rgb(47, 255, 28);
+        border: 1px solid rgb(2, 151, 2);
+    }
+    .event{
+        background-color: red;
+        border: 1px solid rgb(71, 0, 0);
+    }
+    .today{
+        background-color: rgb(73, 207, 255);
+        color: #ffffff;
+        border-radius: 50%;
+    }
+    .total_lucky_day{
+        display: flex;
+        gap: 5px;
+        border: 1px solid black;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+
+
+    }
+    #total_lucky_day_count{
+        background-color: green;
+        width: fit-content;
+        height: fit-content;
+        padding: 5px;
+        color: #ffffff;
+        border-radius: 50%;
+        text-align: center;
+        margin-top: -5px;
+
+    }
+    #total_booked_day_count{
+        background-color: red;
+        width: fit-content;
+        height: fit-content;
+        padding: 5px;
+        color: #ffffff;
+        border-radius: 50%;
+        text-align: center;
+        margin-top: -5px;
+
+    }
+    .title{
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        background-color: rgb(1, 164, 214);
+        border-radius: 10px;
+        margin-bottom: -5px;
+        padding: 5px;
+        
+        b{
+            color: rgb(255, 119, 0);
+        }
+    }
+    #event{
+        margin-bottom: 10px;
+    }
+</style>
+<!-- end calender style -->
+
+<div class="container">
+    <div class=""><h>Welcome - {{e.name}}</h></div>
+</div>
+
+<div class="container">
+    <div>
+        {% include 'include/mobile_menu.html' %}  
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {% include 'include/office_menu.html' %}  
+        </div>
+        <div class="col-10">
+            <div id="event"></div>
+            <div class="total_lucky_day mb-2"><h6 id="month1"></h6>
+                <p>महिन्यात एकूण शुभ दिवस बाकी आहेत </p><strong id="total_lucky_day_count"></strong>
+            </div>
+            
+            <div class="total_lucky_day"><h6 id="month2"></h6>
+                <p>महिन्यात एकूण बुक असलेले दिवस बाकी आहेत </p><strong id="total_booked_day_count"></strong>
+            </div>
+            <!--* calender content *-->
+                <!-- calendar vidio link -> https://youtu.be/B6a068z8Rkk?si=2abUwVyfLOaKLkgG -->
+                <div class="calender">
+                    <div class="month">
+                        <div class="prev" onclick="moveDate('prev')">
+                            <span>&#10094</span>
+                        </div>
+                        <div>
+                            <div style="display: flex;justify-content: center;"><h2 id="month"></h2>&nbsp;&nbsp;<h2 id="year"></h2></div>
+                            <p class="title"> <b> trimurti </b> caterers </p>
+                        </div>
+                        <div class="next" onclick="moveDate('next')">
+                            <span>&#10095</span>
+                        </div>
+                    </div>
+                    <div class="weekends">
+                        <div>रवी</div>
+                        <div>सोम</div>
+                        <div>मंगळ</div>
+                        <div>बुध</div>
+                        <div>गुरु</div>
+                        <div>शुक्र</div>
+                        <div>शनी</div>
+                    </div>
+                    <div class="days">
+                    </div>
+                </div>
+                <!-- end calender content -->
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        var dt = new Date(); 
+        var today = new Date();
+        renderdate()
+        function renderdate(){
+            dt.setDate(1);
+        var day = dt.getDay();
+        var endDate = new Date( dt.getFullYear(), dt.getMonth() + 1, 0 ).getDate();
+
+        var prev_date = new Date( dt.getFullYear(), dt.getMonth(), 0).getDate();
+
+        var today = new Date();
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+        //document.getElementById('date_str').innerHTML = dt.toDateString();
+        document.getElementById('month').innerHTML =  months[dt.getMonth()];
+        document.getElementById('year').innerHTML =  dt.getFullYear();
+        document.getElementById('month1').innerHTML = months[dt.getMonth()];
+        document.getElementById('month2').innerHTML = months[dt.getMonth()];
+
+        var cells = "";
+
+        for(x = day; x>0; x--){
+            cells+= "<div class='prev_date'>"+ (prev_date - x + 1) +"</div>";
+        }
+        for(i = 1; i<=endDate; i++){
+            if(i == today.getDate() && dt.getMonth() == today.getMonth() && dt.getFullYear() == today.getFullYear()){
+                cells+="<div onclick='event_detail("+ i +")' class='font_style today' id=" + "luck" + i +" style='border-radius: 50%;'>"+ i +"</div>";
+            }else{
+                cells+="<div onclick='event_detail("+ i +")' class='font_style' id=" + "luck" + i +">"+ i +"</div>";
+            }
+        }
+
+        document.getElementsByClassName('days')[0].innerHTML = cells;
+    }
+    function moveDate(para){
+        $("#event").empty()
+        if(para == 'next' &  dt.getFullYear() < today.getFullYear()+2){
+            dt.setMonth(dt.getMonth() + 1 );
+            renderdate(),search_lucky_day(),search_event_day()
+        }
+        else if(para == 'prev' & dt.getFullYear() > today.getFullYear()-1){
+            dt.setMonth(dt.getMonth() - 1 ); 
+            renderdate(),search_lucky_day(),search_event_day()      
+        }search_event_day() 
+        
+    }search_event_day() 
+    search_lucky_day()
+    function search_lucky_day(){
+
+        $.ajax({
+            url: "{% url 'search_lucky_day' %}",
+            method: "GET",
+            data:{
+                year:dt.getFullYear(),
+                month:dt.getMonth()+1
+                },
+                success: function(data){
+                    document.getElementById('total_lucky_day_count').innerHTML= data.lucky_day.length
+                    for(let key=0; key<data.lucky_day.length; key++){
+                        i=data.lucky_day[key].lucky_day
+                        nd = new Date(i)
+                        ld=nd.getDate()
+                        document.getElementById('luck'+ld).className='luck font_style';
+                        
+                    }
+                }
+        })
+
+        }
+        search_event_day()
+        function search_event_day(){
+            
+            $.ajax({
+                url: "{% url 'search_event_day' %}",
+                method: "GET",
+                data:{
+                    year:dt.getFullYear(),
+                    month:dt.getMonth()+1
+                },
+                success: function(data){
+                    console.log(data.event_day.length)
+                    document.getElementById('total_booked_day_count').innerHTML= data.event_day.length;
+                    for(let key=0; key<data.event_day.length;key++){
+                        i=data.event_day[key].event_day
+                        nd = new Date(i)
+                        ld=nd.getDate()
+                        document.getElementById('luck'+ld).className='event font_style';
+                    }
+                }
+            })
+            
+        }
+        search_event_day()
+
+        function event_detail(d){
+            $.ajax({
+                url: "{% url 'event_detail' %}",
+                method: "GET",
+                data:{
+                    day:d,
+                    month:dt.getMonth()+1,
+                    year:dt.getFullYear(),
+                },
+                success: function(res){
+                    $("#event").html(res.t)
+                }
+            })
+        }
+</script>
+{% endblock content %}

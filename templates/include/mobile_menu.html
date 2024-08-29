@@ -1,0 +1,26 @@
+<style>
+    a{
+            width: 100%;
+        }
+    .mobile{
+        display: none;
+    }
+    @media only screen and (max-width: 500px) {
+        .mobile{
+            display: flex;
+            gap: 10px;
+            overflow: scroll;
+        }
+        a{
+            white-space: nowrap;
+            width: fit-content;
+        }
+    }
+</style>
+
+<div class="mobile">
+    <a  href="/office/office_dashboard/" class="my-1 {% if request.path == '/office/office_dashboard/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Home</a>
+    <a  href="/office/lucky_day/" class="my-1 {% if request.path == '/office/lucky_day/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Lucky Day</a>
+    <a href="/office_logout/" class="btn btn-danger my-1">Logout</a>
+
+</div>

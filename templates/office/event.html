@@ -1,0 +1,103 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<!-- * style -->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>
+<!-- end * style -->
+ 
+<!--* media screen style *-->
+<style media="only screen and (max-width: 500px)">
+    .col-2{
+        display: none;
+    }
+    .col-10{
+        width: 100%;
+    }
+</style>
+<!-- end media screen style -->
+
+<div class="container">
+    <div class=""><h>Welcome - {{e.name}}</h></div>
+</div>
+
+<div class="container">
+    <div>
+        {% include 'include/mobile_menu.html' %}  
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {% include 'include/office_menu.html' %}  
+        </div>
+        <div class="col-10">
+            {% include 'include/alert.html' %}
+            <!--* Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Add_Event">
+                Add Event
+            </button>
+            <!-- end Button trigger modal -->
+
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th scope="col">Lucky Day</th>
+                      <th scope="col">Party Name</th>
+                      <th scope="col">Add By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for e in event %}
+                    <tr>
+                        <td>{{e.event_day}}</td>
+                        <td>{{e.party_name}}</td>
+                        <td>{{e.office_employee.name}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+ 
+            <!-- Modal -->
+            <div class="modal fade" id="Add_Event" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Event</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST">{% csrf_token %}
+                        <div  class="mb-3">
+                            <label for="party" >Party Name</label>
+                            <input type="text" id="party" name="party_name" class="form-control" placeholder="Party Name" required>
+                        </div>
+                        <div  class="mb-3">
+                            <label for="Location">Location</label>
+                            <textarea name="location" class=" form-control border" id="Location" placeholder="Location" required></textarea>
+                        </div>
+
+                        <div  class="mb-3">
+                            <label>Event Date</label>
+                            <input type="date" name="date" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary border" name="Add_Event">Add</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
