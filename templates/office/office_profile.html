@@ -1,0 +1,99 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<!-- * style -->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>
+<!-- end * style -->
+
+<!--* media screen style *-->
+<style media="only screen and (max-width: 500px)">
+    .col-2{
+        display: none;
+    }
+    .col-10{
+        width: 100%;
+    }
+</style>
+<!-- end media screen style -->
+
+<style>
+    form{
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        width: 400px;
+        height: fit-content;
+        margin: auto;
+    }
+</style>
+
+
+<div class="container">
+    <div class=""><h>Welcome - {{e.name}}</h></div>
+</div>
+
+<div class="container">
+    <div>
+        {% include 'include/mobile_menu.html' %}  
+    </div>
+    <div class="row">
+        <div class="col-2">
+            {% include 'include/office_menu.html' %}  
+        </div>
+        <div class="col-10">
+            {% include 'include/alert.html' %}
+                <form method="POST">{% csrf_token %}
+                    <div>
+                        <label for="name" class="mt-2">Name</label>
+                        <input type="text" id="name" name="name" value="{{e.name}}" class="my-2 form-control" required>
+                    </div>
+                    <div>
+                        <label for="Mobile" class="mt-2">Mobile</label>
+                        <input type="number" oninput="check_mobile()" id="Mobile" name="mobile" value="{{e.mobile}}" class="my-2 form-control" required>
+                    </div>
+                    <div>
+                        <label for="pin" class="mt-2">pin</label>
+                        <input type="number" id="pin" oninput="check_pin()" name="pin" value="{{e.pin}}" class="my-2 form-control" required>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary form-control my-3" name="edit_profile">Save Changes</button>
+                    </div>
+                </form>
+
+        </div>
+    </div>
+</div>
+<script>
+    function check_mobile(){
+        mobile = document.getElementById('Mobile').value;
+        if (mobile.length <= 9 ){
+          document.getElementById('number').style.borderColor ='green';return false;
+        }
+          if (mobile.length >= 11 ){
+          alert('only 10 digit number ')
+        }
+          if (mobile.length == 10 ){
+              document.getElementById('number').style.borderColor ='';return true;
+
+        }
+    }
+    function check_pin(){
+        pin=document.getElementById('pin').value;
+        if (pin.length <= 3 ){
+          document.getElementById('pin').style.borderColor ='green';return false;
+        }
+          if (pin.length >= 5 ){
+          alert('only 4 digit number Secret Pin')
+        }
+          if (pin.length == 4 ){
+              document.getElementById('pin').style.borderColor ='';return true;
+        }
+    }
+</script>
+{% endblock content %}

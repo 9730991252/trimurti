@@ -132,6 +132,29 @@ def event(request):
         return redirect('login')
 
 
+def office_profile(request):
+    if request.session.has_key('office_mobile'):
+        office_mobile = request.session['office_mobile']
+        context={}
+        e=Office_employee.objects.filter(mobile=office_mobile).first()
+        if e:
+            if 'edit_profile'in request.POST:
+                name = request.POST.get('name')
+                mobile = request.POST.get('mobile')
+                pin = request.POST.get('pin')
+                Office_employee(
+                    id=e.id,
+                    name = name,
+                    mobile = mobile,
+                    pin = pin
+                ).save()
+                del request.session['office_mobile']
+        context={
+            'e':e,
+        }
+        return render(request, 'office/office_profile.html', context)
+    else:
+        return redirect('login')
 
 
 
