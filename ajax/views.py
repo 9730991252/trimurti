@@ -30,7 +30,7 @@ def event_detail(request):
         context={
             'event':event,
             'event_count':event.count(),
-            'date':date
+            'date':f"{day}-{month}-{year}"
         }
         t = render_to_string('ajax/office/event_detail.html', context)
     return JsonResponse({'t':t})

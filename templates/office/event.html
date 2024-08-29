@@ -22,7 +22,23 @@
     }
 </style>
 <!-- end media screen style -->
-
+<style>
+    .event{
+        border-radius: 10px;
+        border:1px solid rgb(255, 69, 69);
+        color: rgb(0, 0, 0);
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 15px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        button{
+            width: 100px;
+            margin-bottom: 10px;
+        }
+    }
+</style>
 <div class="container">
     <div class=""><h>Welcome - {{e.name}}</h></div>
 </div>
@@ -43,24 +59,63 @@
             </button>
             <!-- end Button trigger modal -->
 
-            <table class="table">
-                <thead>
-                  <tr>
-                      <th scope="col">Lucky Day</th>
-                      <th scope="col">Party Name</th>
-                      <th scope="col">Add By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for e in event %}
-                    <tr>
-                        <td>{{e.event_day}}</td>
-                        <td>{{e.party_name}}</td>
-                        <td>{{e.office_employee.name}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-              </table>
+            <div class="all_event">
+                {% for e in event %}
+                    <div class="event">
+                        <div style="display: flex;gap: 20px;justify-content: center;">
+                            <div>{{e.event_day}}</div>
+                            <div>Booked By - {{e.office_employee.name}}</div>
+                        </div>
+                        <div style="display: flex;gap: 20px;justify-content: center;">
+                            <div>{{e.party_name}}</div>
+                            <div>Persons - {{e.persons}}</div>
+                        </div>
+                        <div>{{e.location}}</div>
+                        <div><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit_Event{{e.id}}">Edit</button></div>
+                    </div>
+                    <!--* Edit Modal -->
+                    <div class="modal fade" id="Edit_Event{{e.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Event</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="POST">{% csrf_token %}
+                                <input type="hidden" name="id" value="{{e.id}}" class="form-control">
+                                <input type="hidden" name="e_id" value="{{e.office_employee_id}}" class="form-control">
+                                <div  class="mb-3">
+                                    <label for="party" >Party Name</label>
+                                    <input type="text" id="party" name="party_name" value="{{e.party_name}}" class="form-control" placeholder="Party Name" required>
+                                </div>
+                                <div  class="mb-3">
+                                    <label for="Location">Location</label>
+                                    <textarea name="location" class=" form-control border" id="Location" placeholder="Location" required>{{e.location}}</textarea>
+                                </div>
+                                <div  class="mb-3">
+                                    <label for="persons" >Persons</label>
+                                    <input type="number" value="{{e.persons}}" id="persons" name="persons" class="form-control" placeholder="Persons" required>
+                                </div>
+        
+                                <div  class="mb-3">
+                                    <label>Event Date</label>
+                                    <label> - {{e.event_day}}</label>
+                                    <input type="date" value="{{e.event_day}}" name="date" class="form-control" >
+                                </div>
+        
+                                <button type="submit" class="btn btn-primary border" name="Edit_Event">Add</button>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Edit Modal End -->
+                {% endfor %}
+            </div>
  
             <!-- Modal -->
             <div class="modal fade" id="Add_Event" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,6 +134,10 @@
                         <div  class="mb-3">
                             <label for="Location">Location</label>
                             <textarea name="location" class=" form-control border" id="Location" placeholder="Location" required></textarea>
+                        </div>
+                        <div  class="mb-3">
+                            <label for="persons" >Persons</label>
+                            <input type="number" id="persons" name="persons" class="form-control" placeholder="Persons" required>
                         </div>
 
                         <div  class="mb-3">

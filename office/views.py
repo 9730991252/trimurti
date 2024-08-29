@@ -76,6 +76,7 @@ def event(request):
         if e:
             if 'Add_Event'in request.POST:
                 party_name = request.POST.get('party_name')
+                persons = request.POST.get('persons')
                 location = request.POST.get('location')
                 event_day = request.POST.get('date')
                 today_date = date.today()
@@ -84,6 +85,7 @@ def event(request):
                     Event(
                         office_employee_id = e.id,
                         party_name=party_name,
+                        persons=persons,
                         location=location,
                         event_day = event_day,
                         month = dt.month,
@@ -92,7 +94,35 @@ def event(request):
                     ).save()
                     return redirect('/office/event/')
                 else:
-                    messages.warning(request,"please Select Future Lucky Day")            
+                    messages.warning(request,"please Select Future Event Day") 
+            if 'Edit_Event'in request.POST:           
+                id = request.POST.get('id')
+                e_id = request.POST.get('e_id')
+                party_name = request.POST.get('party_name')
+                persons = request.POST.get('persons')
+                location = request.POST.get('location')
+                event_day = request.POST.get('date')
+                if event_day == '':
+                    e = Event.objects.get(id=id)
+                    event_day = e.event_day
+                    event_day = str(event_day)
+                today_date = date.today()
+                if event_day >= str(today_date) :
+                    dt = datetime.strptime(event_day, '%Y-%m-%d').date()
+                    Event(
+                        id=id,
+                        office_employee_id = e_id,
+                        party_name=party_name,
+                        persons=persons,
+                        location=location,
+                        event_day = event_day,
+                        month = dt.month,
+                        year = dt.year,
+                        status = 1,
+                    ).save()
+                    return redirect('/office/event/')
+                else:
+                    messages.warning(request,"please Select Future Event Day") 
         context={
             'e':e,
             'event':Event.objects.filter(status=1).order_by('event_day')

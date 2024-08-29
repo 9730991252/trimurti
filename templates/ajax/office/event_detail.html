@@ -19,8 +19,14 @@
     <div class="text-center"><b>{{date}} तारीख {{event_count}} ठिकाणी बुक</b></div>
     {% for e in event %}
         <div class="event_box">
-            <div>{{e.event_day}}</div>
-            <div>{{e.party_name}}</div>
+            <div style="display: flex;gap: 20px;justify-content: center;">
+                <div>{{e.event_day}}</div>
+                <div>Booked By - {{e.office_employee.name}}</div>
+            </div>
+            <div style="display: flex;gap: 20px;justify-content: center;">
+                <div>{{e.party_name}}</div>
+                <div>Persons - {{e.persons}}</div>
+            </div>
             <div>{{e.location}}</div>
         </div>
     {% endfor %}
