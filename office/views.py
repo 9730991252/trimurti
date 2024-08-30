@@ -76,7 +76,8 @@ def event(request):
         if e:
             if 'Add_Event'in request.POST:
                 party_name = request.POST.get('party_name')
-                persons = request.POST.get('persons')
+                persons_day = request.POST.get('persons_day')
+                persons_night = request.POST.get('persons_night')
                 location = request.POST.get('location')
                 event_day = request.POST.get('date')
                 today_date = date.today()
@@ -85,7 +86,8 @@ def event(request):
                     Event(
                         office_employee_id = e.id,
                         party_name=party_name,
-                        persons=persons,
+                        persons_day=persons_day,
+                        persons_night=persons_night,
                         location=location,
                         event_day = event_day,
                         month = dt.month,
@@ -99,7 +101,8 @@ def event(request):
                 id = request.POST.get('id')
                 e_id = request.POST.get('e_id')
                 party_name = request.POST.get('party_name')
-                persons = request.POST.get('persons')
+                persons_day = request.POST.get('persons_day')
+                persons_night = request.POST.get('persons_night')
                 location = request.POST.get('location')
                 event_day = request.POST.get('date')
                 if event_day == '':
@@ -113,7 +116,8 @@ def event(request):
                         id=id,
                         office_employee_id = e_id,
                         party_name=party_name,
-                        persons=persons,
+                        persons_day=persons_day,
+                        persons_night=persons_night,
                         location=location,
                         event_day = event_day,
                         month = dt.month,

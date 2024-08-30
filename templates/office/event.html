@@ -68,7 +68,8 @@
                         </div>
                         <div style="display: flex;gap: 20px;justify-content: center;">
                             <div>{{e.party_name}}</div>
-                            <div>Persons - {{e.persons}}</div>
+                            <div>Persons Day - {{e.persons_day}}</div>
+                            <div>Persons Night - {{e.persons_night}}</div>
                         </div>
                         <div>{{e.location}}</div>
                         <div><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Edit_Event{{e.id}}">Edit</button></div>
@@ -94,8 +95,12 @@
                                     <textarea name="location" class=" form-control border" id="Location" placeholder="Location" required>{{e.location}}</textarea>
                                 </div>
                                 <div  class="mb-3">
-                                    <label for="persons" >Persons</label>
-                                    <input type="number" value="{{e.persons}}" id="persons" name="persons" class="form-control" placeholder="Persons" required>
+                                    <label for="persons" >Persons Day</label>
+                                    <input type="number" value="{{e.persons_day}}" id="persons" name="persons_day" class="form-control" placeholder="Persons" required>
+                                </div>
+                                <div  class="mb-3">
+                                    <label for="persons" >Persons Night</label>
+                                    <input type="number" value="{{e.persons_night}}" id="persons" name="persons_night" class="form-control" placeholder="Persons" required>
                                 </div>
         
                                 <div  class="mb-3">
@@ -136,8 +141,12 @@
                             <textarea name="location" class=" form-control border" id="Location" placeholder="Location" required></textarea>
                         </div>
                         <div  class="mb-3">
-                            <label for="persons" >Persons</label>
-                            <input type="number" id="persons" name="persons" class="form-control" placeholder="Persons" required>
+                            <label for="persons" >Persons Day</label>
+                            <input type="number"  id="persons" name="persons_day" class="form-control" placeholder="Persons Day" required>
+                        </div>
+                        <div  class="mb-3">
+                            <label for="persons" >Persons Night</label>
+                            <input type="number"  id="persons" name="persons_night" class="form-control" placeholder="Persons Night" required>
                         </div>
 
                         <div  class="mb-3">
