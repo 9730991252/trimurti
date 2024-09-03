@@ -226,5 +226,8 @@
         }search_event_day() 
         
     }
+    fetch('http://127.0.0.1:8000/ajax/indraprastha/3')
+      .then(response => response.json())
+      .then(json => console.log(json))
 </script>
 {% endblock content %}
