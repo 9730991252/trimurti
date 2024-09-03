@@ -160,8 +160,47 @@ def office_profile(request):
     else:
         return redirect('login')
 
+def indraprastha(request):
+    if request.session.has_key('office_mobile'):
+        office_mobile = request.session['office_mobile']
+        context={}
+        e=Office_employee.objects.filter(mobile=office_mobile).first()
+        if e:
+            pass
+        context={
+            'e':e,
+        }
+        return render(request, 'office/indraprastha.html', context)
+    else:
+        return redirect('login')
 
+def netaji(request):
+    if request.session.has_key('office_mobile'):
+        office_mobile = request.session['office_mobile']
+        context={}
+        e=Office_employee.objects.filter(mobile=office_mobile).first()
+        if e:
+            pass
+        context={
+            'e':e,
+        }
+        return render(request, 'office/netaji.html', context)
+    else:
+        return redirect('login')
 
+def gulmohar(request):
+    if request.session.has_key('office_mobile'):
+        office_mobile = request.session['office_mobile']
+        context={}
+        e=Office_employee.objects.filter(mobile=office_mobile).first()
+        if e:
+            pass
+        context={
+            'e':e,
+        }
+        return render(request, 'office/gulmohar.html', context)
+    else:
+        return redirect('login')
 
 
 
