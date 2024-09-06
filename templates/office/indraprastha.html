@@ -206,9 +206,9 @@
         }
         for(i = 1; i<=endDate; i++){
             if(i == today.getDate() && dt.getMonth() == today.getMonth() && dt.getFullYear() == today.getFullYear()){
-                cells+="<div  class='font_style today' id=" + "luck" + i +" style='border-radius: 50%;'>"+ i +"</div>";
+                cells+="<div  class='font_style today' id=" + "book_d" + i +" style='border-radius: 50%;'>"+ i +"</div>";
             }else{
-                cells+="<div  class='font_style' id=" + "luck" + i +">"+ i +"</div>";
+                cells+="<div  class='font_style' id=" + "book_d" + i +">"+ i +"</div>";
             }
         }
 
@@ -218,16 +218,46 @@
         $("#event").empty()
         if(para == 'next' &  dt.getFullYear() < today.getFullYear()+2){
             dt.setMonth(dt.getMonth() + 1 );
-            renderdate(),search_lucky_day(),search_event_day()
+            renderdate();booked_date();
         }
         else if(para == 'prev' & dt.getFullYear() > today.getFullYear()-1){
             dt.setMonth(dt.getMonth() - 1 ); 
-            renderdate(),search_lucky_day(),search_event_day()      
-        }search_event_day() 
+            renderdate();booked_date();
+        }
         
     }
-    fetch('http://127.0.0.1:8000/ajax/indraprastha/3')
-      .then(response => response.json())
-      .then(json => console.log(json))
+    booked_date();
+
+function booked_date(){
+
+    var y = dt.getFullYear();
+    var m = dt.getMonth()+1;
+
+    $.ajax({
+        url: "{% url 'indraprastha_booking' %}",
+        method: "GET",
+        data:{
+            //k_id:k_id,
+            y:y,
+            m:m,
+      
+            },
+            success: function(data){
+                for(let key=0; key<data.book.length;key++){
+                    i=data.book[key].event_date
+                    nd=new Date(i)
+                    nb=nd.getDate()
+                    console.log(nb)
+                
+                    //document.getElementById('book_d'+nb).innerHTML=`<div id='parti_name'>${nb}<br><h>${data.book[key].parti_name}<h></div>`;
+                    document.getElementById('book_d'+nb).className='event font_style';
+
+                }
+
+            }
+    })
+ }
+
+
 </script>
 {% endblock content %}

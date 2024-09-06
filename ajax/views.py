@@ -2,6 +2,8 @@ from django.shortcuts import render
 from office.models import *
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+import requests
+
 # Create your views here.
 def search_lucky_day(request):
     if request.method == 'GET':
@@ -38,23 +40,18 @@ def event_detail(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def indraprastha_booking(request):
+    if request.method == 'GET':
+        k_id = 4
+        y = request.GET['y']
+        m = request.GET['m']
+        #print(f'{k_id}')
+        URL = "https://bookkaryalay.com/api/indraprastha/"
+        chk=f"{k_id}/{m}/{y}"
+        ur=URL+chk
+        r = requests.get(url=ur)
+        book = r.json()
+    return JsonResponse(book)
 
 
 

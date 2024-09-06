@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta , date
 from django.core.paginator import Paginator
 # Create your views here.
+
 def office_dashboard(request):
     if request.session.has_key('office_mobile'):
         office_mobile = request.session['office_mobile']
@@ -173,6 +174,8 @@ def indraprastha(request):
         return render(request, 'office/indraprastha.html', context)
     else:
         return redirect('login')
+
+
 
 def netaji(request):
     if request.session.has_key('office_mobile'):
