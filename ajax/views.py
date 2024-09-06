@@ -42,7 +42,7 @@ def event_detail(request):
 
 def indraprastha_booking(request):
     if request.method == 'GET':
-        k_id = 4
+        k_id = 5
         y = request.GET['y']
         m = request.GET['m']
         #print(f'{k_id}')
